@@ -33,7 +33,7 @@ const WelcomeScreen = (prop:typeProps) => {
             <View style={styles.container}>
                 <Image source={WELCOME_TITLE} style={styles.imgTitle} />
                 <Image source={DRINK} />
-                <TouchableOpacity onPress={() => handleNavigation(navigation)}>
+                <TouchableOpacity onPress={() => handleNavigation(navigation)} style={{backgroundColor:"transparent", width:"100%", marginTop:90}}>
                     <Image style={styles.buttonSignIn} source={BUTTON_SIGN_IN} />
                 </TouchableOpacity>
             </View>

@@ -5,7 +5,8 @@ import {
 const styleContainer = StyleSheet.create({
     container:{
         flex: 1,
-        position:"relative"
+        position:"relative",
+        alignItems: "center"
     },
     imgTitle:{
         width: "100%",

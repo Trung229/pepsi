@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import Layout from '../../layout/index'
-import { SIGN_IN_TO_EVENT, DATA_CITY, DATA_DISTRICT, DATA_AGENCY, DATE_ICON, IMAGE_ICON, DECOR_LEFT, DECOR_RIGHT, ICED_LEFT , ICED_RIGHT } from '../../utils/constant'
+import { SIGN_IN_TO_EVENT, DATA_CITY, DATA_DISTRICT, DATA_AGENCY, DATE_ICON, IMAGE_ICON, DECOR_LEFT, DECOR_RIGHT, ICED_LEFT, ICED_RIGHT } from '../../utils/constant'
 import styles from './styles'
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -23,34 +23,34 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const Item = (props: any) => {
     return (
-        <View style={[styles.containerItem]} key={props.item}>
-            <TouchableOpacity onPress={() => {
-                props.handleSetOpen(false);
-                props.handleSetValue(props.value)
-            }}>
-                <Text style={styles.agencyName}>
-                    {props.item.value}
-                </Text>
-                <Text style={styles.addressName}>
-                    {props.item.address}
-                </Text>
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={[styles.containerItem]} key={props.item} onPress={() => {
+            props.onPress(props.item);
+            props.TickIconComponent();
+        }
+        }>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor:props.isSelected ? "#cef5ff":'#fff'}}>
+                <View>
+                    <Text style={styles.agencyName}>{props.item.value}</Text>
+                    <Text style={styles.addressName}>{props.item.address}</Text>
+                </View>
+                {props.isSelected && <props.TickIconComponent isSelected={props.isSelected} />}
+            </View>
+        </TouchableOpacity>
     )
 }
 
 const InfoScreen = () => {
     const [openCity, setOpenCity] = useState(false);
-    const [cityValue, setCityValue] = useState<string | null>(null);
+    const [cityValue, setCityValue] = useState(null);
     const [city, setCity] = useState(DATA_CITY);
 
     const [openDistrict, setOpenDistrict] = useState(false);
-    const [districtValue, setDistrictValue] = useState<string | null>(null);
+    const [districtValue, setDistrictValue] = useState(null);
     const [district, setDistrict] = useState(DATA_DISTRICT);
 
 
     const [openAgency, setOpenAgency] = useState(false);
-    const [agencyValue, setAgencyValue] = useState<string | null>(null);
+    const [agencyValue, setAgencyValue] = useState(null);
     const [agency, setAgency] = useState(DATA_AGENCY);
 
 
@@ -66,7 +66,6 @@ const InfoScreen = () => {
     };
 
     const handleConfirm = (date: any) => {
-        console.warn("A date has been picked: ", date);
         hideDatePicker();
     };
 
@@ -75,7 +74,7 @@ const InfoScreen = () => {
             <View style={styles.container}>
                 <Image source={SIGN_IN_TO_EVENT} style={styles.imgTitle} />
 
-                <ScrollView style={{marginTop:10, backgroundColor:"#004F9D"}}>
+                <ScrollView style={{ marginTop: 10, backgroundColor: "#004F9D" }}>
                     <View style={styles.containerBody}>
                         <Text style={styles.headerText}>THÔNG TIN MUA HÀNG</Text>
                         <View style={styles.address}>
@@ -96,7 +95,7 @@ const InfoScreen = () => {
                                     }}
                                     placeholder="Select an city"
                                     selectedItemContainerStyle={{
-                                        backgroundColor: "#84E5FF",
+                                        backgroundColor: "#cef5ff",
                                     }}
                                     listItemLabelStyle={{
                                         color: "#00355A"
@@ -132,7 +131,7 @@ const InfoScreen = () => {
 
                                     }}
                                     selectedItemContainerStyle={{
-                                        backgroundColor: "#84E5FF",
+                                        backgroundColor: "#cef5ff",
                                     }}
                                     listItemLabelStyle={{
                                         color: "#00355A"
@@ -167,7 +166,7 @@ const InfoScreen = () => {
                                 }}
                                 placeholder="Select an Agency"
                                 selectedItemContainerStyle={{
-                                    backgroundColor: "#84E5FF",
+                                    backgroundColor: "#cef5ff",
                                 }}
                                 listItemLabelStyle={{
                                     color: "#00355A"
@@ -179,10 +178,7 @@ const InfoScreen = () => {
                                     marginTop: 4,
                                     borderRadius: 5,
                                 }}
-                                onSelectItem={(item) => {
-                                    console.log(item);
-                                }}
-                                renderListItem={(props) => <Item {...props} handleSetOpen={(payload: boolean) => setOpenAgency(payload)} handleSetValue={(payload: string | null) => setAgencyValue(payload)} />}
+                                renderListItem={(props) => <Item {...props} />}
                                 zIndex={100}
                             />
                         </View>
@@ -236,36 +232,36 @@ const InfoScreen = () => {
                             <View>
                                 <View >
                                     <Text style={styles.textLabel}>Hình hiệp cưới</Text>
-                                    <View style={{ flex: 1, flexDirection: 'row', position: 'relative'}}>
+                                    <View style={{ flex: 1, flexDirection: 'row', position: 'relative' }}>
                                         <TouchableOpacity style={styles.imgIcon}>
                                             <Image source={IMAGE_ICON} />
                                         </TouchableOpacity>
                                         <View style={styles.straightLine}></View>
-                                        <TextInput editable={false} style={[styles.inputField, { flex: 1,  position: 'relative', zIndex:0, paddingLeft:50 }]} placeholder="Attach the picture" />
+                                        <TextInput editable={false} style={[styles.inputField, { flex: 1, position: 'relative', zIndex: 0, paddingLeft: 50 }]} placeholder="Attach the picture" />
                                     </View>
                                 </View>
                             </View>
                             <View>
                                 <View >
                                     <Text style={styles.textLabel}>Hình hóa đơn bán hàng</Text>
-                                    <View style={{ flex: 1, flexDirection: 'row', position: 'relative'}}>
+                                    <View style={{ flex: 1, flexDirection: 'row', position: 'relative' }}>
                                         <TouchableOpacity style={styles.imgIcon}>
                                             <Image source={IMAGE_ICON} />
                                         </TouchableOpacity>
                                         <View style={styles.straightLine}></View>
-                                        <TextInput editable={false} style={[styles.inputField, { flex: 1,  position: 'relative', zIndex:0, paddingLeft:50 }]} placeholder="Attach the picture" />
+                                        <TextInput editable={false} style={[styles.inputField, { flex: 1, position: 'relative', zIndex: 0, paddingLeft: 50 }]} placeholder="Attach the picture" />
                                     </View>
                                 </View>
                             </View>
                             <View>
                                 <View >
                                     <Text style={styles.textLabel}>Hình khối sản phẩm</Text>
-                                    <View style={{ flex: 1, flexDirection: 'row', position: 'relative'}}>
+                                    <View style={{ flex: 1, flexDirection: 'row', position: 'relative' }}>
                                         <TouchableOpacity style={styles.imgIcon}>
                                             <Image source={IMAGE_ICON} />
                                         </TouchableOpacity>
                                         <View style={styles.straightLine}></View>
-                                        <TextInput editable={false} style={[styles.inputField, { flex: 1,  position: 'relative', zIndex:0, paddingLeft:50 }]} placeholder="Attach the picture" />
+                                        <TextInput editable={false} style={[styles.inputField, { flex: 1, position: 'relative', zIndex: 0, paddingLeft: 50 }]} placeholder="Attach the picture" />
                                     </View>
                                 </View>
                             </View>
@@ -273,10 +269,10 @@ const InfoScreen = () => {
                     </View>
 
                 </ScrollView>
-                <Image source={DECOR_LEFT}  style={styles.pillarLeft}/>
-                <Image source={DECOR_RIGHT} style={styles.pillarRight}/>
-                <Image source={ICED_LEFT}  style={styles.iceLeft}/>
-                <Image source={ICED_RIGHT} style={styles.iceRight}/>
+                <Image source={DECOR_LEFT} style={styles.pillarLeft} />
+                <Image source={DECOR_RIGHT} style={styles.pillarRight} />
+                <Image source={ICED_LEFT} style={styles.iceLeft} />
+                <Image source={ICED_RIGHT} style={styles.iceRight} />
             </View>
         </Layout>
     )

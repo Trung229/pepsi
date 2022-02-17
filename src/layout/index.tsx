@@ -20,7 +20,7 @@ const Layout = (prop:LayoutReceive) =>{
     return (
         <View style={styles.container}>
              <ImageBackground source={BACKGROUND_MOBILE} style={styles.imgBackground}>
-                 <Image source={NAV_MOBILE}/>
+                 <Image source={NAV_MOBILE} style={{width:"100%"}}/>
                 {prop.children}
              </ImageBackground>
         </View>

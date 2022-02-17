@@ -118,14 +118,14 @@ const styleContainer = StyleSheet.create({
         left:-6,
         resizeMode:"contain",
         top: 70,
-        height:540
+        height:660
     },
     pillarRight:{
         position: "absolute",
         right:-6,
         resizeMode:"contain",
         top: 70,
-        height:540
+        height:660
     },
     iceLeft:{
         position: "absolute",
