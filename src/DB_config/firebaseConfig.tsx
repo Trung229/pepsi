@@ -1,19 +1,23 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore/lite';
+import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA7OsBqSn4GcSnqXwjCDaOK9q7_fwyg3n8",
-  authDomain: "fir-v9-f1e9c.firebaseapp.com",
-  projectId: "fir-v9-f1e9c",
-  storageBucket: "fir-v9-f1e9c.appspot.com",
-  messagingSenderId: "779766760181",
-  appId: "1:779766760181:web:8c9a202dc1ffa37112fbbc"
+  apiKey: "AIzaSyDP1JBbDUUr7i7U1gSLM3MrSkNeQlWuiFk",
+  authDomain: "pepsi-d1b86.firebaseapp.com",
+  projectId: "pepsi-d1b86",
+  storageBucket: "pepsi-d1b86.appspot.com",
+  messagingSenderId: "33299705191",
+  appId: "1:33299705191:web:44c19776c49eb33bd553c2",
+  measurementId: "G-5RJD80ELTB"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+// Get a reference to the storage service, which is used to create references in your storage bucket
+
