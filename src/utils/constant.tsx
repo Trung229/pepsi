@@ -12,6 +12,9 @@ export const ICED = require("../assets/img/ice.png");
 export const ICED_LEFT = require("../assets/img/iceLeft.png");
 export const ICED_RIGHT = require("../assets/img/iceRight.png");
 export const SUBMIT_BUTTON = require("../assets/img/submit.png")
+export const SIGN_IN_SUCCESS = require("../assets/img/signInSuccess.png")
+export const CONTENT_SUCCESS = require("../assets/img/content.png")
+export const BACKGROUND_SUCCESS = require("../assets/img/backgroundSuccess.png")
 export const DATA_CITY = [
     { label: 'Bà Rịa', value: 'Bà Rịa' },
     { label: 'Bạc Liêu', value: 'Bạc Liêu' },

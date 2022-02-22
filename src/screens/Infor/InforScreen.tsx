@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import {
     Text,
     View,
@@ -19,9 +19,10 @@ import styles from './styles'
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import storage from '@react-native-firebase/storage';
 import moment from 'moment';
-import { addEvent } from '../../services/pepsi';
+
+import { useSelector, useDispatch } from 'react-redux'
+import {addEvent} from '../../services/pepsi'
 
 
 type ValueType = string | number | boolean;
@@ -31,6 +32,20 @@ interface responseChild {
     uri: string,
     fileName?: string
 }
+
+interface DefaultRootStateType {
+    statusActivityIndicator:boolean,
+    isDone:boolean
+}
+interface subNavigation {
+    navigate: (where:string, params?:string) => void;
+}
+
+interface typeProps {
+    navigation: subNavigation;
+}
+
+
 
 
 const Item = (props: any) => {
@@ -51,7 +66,8 @@ const Item = (props: any) => {
     )
 }
 
-const InfoScreen = () => {
+const InfoScreen = (prop:typeProps) => {
+    const {navigation} = prop
     const [openCity, setOpenCity] = useState(false);
     const [cityValue, setCityValue] = useState<ValueType | null>(null);
     const [city, setCity] = useState(DATA_CITY);
@@ -82,9 +98,25 @@ const InfoScreen = () => {
     const [partyAddress, setPartyAddress] = useState<string>("");
 
 
-
-
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+
+    const status = useSelector((state:DefaultRootStateType) => state?.statusActivityIndicator)
+    const isDone = useSelector((state:DefaultRootStateType) => state?.isDone)
+    const dispatch = useDispatch();
+    
+
+    useLayoutEffect(()=>{
+        if(isDone){
+            navigation.navigate("Success");
+        }   
+        return () =>{
+            dispatch({
+                type: 'pepsi/handleIsDone',
+                payload: false,
+            })
+        }
+    },[status, isDone])
 
     const selectImage = () => {
         const options: any = {
@@ -149,6 +181,10 @@ const InfoScreen = () => {
 
 
     const handleSubmitForm = () => {
+        dispatch({
+            type: 'pepsi/changeStatusActivityIndicator',
+            payload: true,
+        })
         const data = {
             city: cityValue,
             district: districtValue,
@@ -169,7 +205,7 @@ const InfoScreen = () => {
                 image3,
             ]
         }
-        addEvent(data);
+        addEvent(data, dispatch);
         return null;
     }
 
@@ -189,6 +225,9 @@ const InfoScreen = () => {
 
     return (
         <Layout title="InfoScreen">
+            <View style={{display: !status ? 'none' : 'flex', backgroundColor:'red', opacity:0.2, position: 'absolute',top:0, left:0, right:0, bottom:0, zIndex:10, alignItems: 'center', justifyContent:'center'}}>
+                <ActivityIndicator size="large" />
+            </View>
             <View style={styles.container}>
                 <Image source={SIGN_IN_TO_EVENT} style={styles.imgTitle} />
 
